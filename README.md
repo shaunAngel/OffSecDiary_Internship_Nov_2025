@@ -1,72 +1,114 @@
 ShadowForm — Automated Web Input Vulnerability Scanner
-Developer: D Shaun Angel | OffSecDiary Red Team Internship Final Project
+
+Developer: D Shaun Angel
+OffSecDiary Red Team Internship – Final Project
 
 ShadowForm is a lightweight automated vulnerability scanner designed to detect insecure web input forms. It simulates common attack payloads such as SQL Injection and Reflected XSS to identify weak input handling mechanisms in web applications.
-It behaves like a simplified version of Burp Suite Intruder — fully automated and non-destructive.
+The tool behaves like a simplified version of Burp Suite Intruder — fully automated, fast, and non-destructive.
 
-⚠️Legal Notice (Important)
-This tool is created strictly for educational and authorized security testing only.
-Do NOT scan websites without explicit permission.
+Legal Notice
 
-♦︎Features
-Automatic web crawler (depth-limited)
-Form extraction (inputs, method, action)
--Automated payload injection:
+This tool is created strictly for educational, training, and authorized security testing purposes only.
+Do not scan websites without explicit permission.
+
+Features
+
+Automatic depth-limited web crawler
+
+Extraction of forms, input fields, methods, and action URLs
+
+Automated payload injection:
+
 SQL Injection
+
 Reflected XSS
-Authentication bypass
-Basic IDOR pattern detection
-Structured vulnerability report
-Works without any headless browser
 
-♦︎Architecture Overview
+Authentication bypass attempts
 
-ShadowForm consists of six major components:
+Basic IDOR pattern probing
+
+Structured console-based vulnerability report
+
+No headless browser required
+
+Architecture Overview
+
+ShadowForm is structured into six core components:
 
 1. Web Crawler
+
 Recursively visits internal links
-Avoids duplicates
-Collects pages containing forms
+
+Avoids duplicate URLs
+
+Collects pages likely containing forms
 
 2. Form Extractor
-Detects:
+
+Detects HTML elements such as:
 <form>, <input>, <textarea>, <select>
 Captures:
-Method (GET/POST)
+
+HTTP method (GET/POST)
+
 Action URL
-Input field names
+
+Parameter/input names
 
 3. Payload Engine
-SQLi payload list
-XSS payload list
-Basic auth-bypass payloads
+
+Maintains lists of:
+
+SQL Injection payloads
+
+XSS payloads
+
+Basic authentication bypass payloads
 
 4. Request Maker
-Submits payloads via GET/POST
-Captures HTML responses & status codes
+
+Submits payloads via GET or POST requests
+
+Captures full HTTP responses and status codes
 
 5. Vulnerability Detector
-Detects:
-SQL errors
-Reflected XSS
-Authentication anomalies
+
+Identifies:
+
+SQL error signatures in responses
+
+Reflected payloads indicating XSS
+
+Authentication response anomalies
 
 6. Reporting Engine
-Outputs:
-Vulnerable pages
-Payload that triggered the vulnerability
-Vulnerability category
 
-♦︎How to Install
-Make sure Python 3.8+ is installed.
+Outputs:
+
+Vulnerable page URL
+
+Affected form action
+
+Detected vulnerability type
+
+Payload responsible for triggering it
+
+Installation
+
+Ensure Python version 3.8+ is installed.
+
 Install dependencies:
+
 pip install requests beautifulsoup4
 
-▶️ How to Run
+How to Run
 python shadowform.py
-(When prompted, enter the target URL:http://testphp.vulnweb.com)
 
-♣︎Sample Output
+
+When prompted, enter a target URL.
+(For demonstration purposes, you may use: http://testphp.vulnweb.com)
+
+Sample Output
 ------ SHADOWFORM REPORT ------
 
 Page: http://testphp.vulnweb.com
@@ -82,61 +124,80 @@ Payload: <script>alert(1)</script>
 Each finding includes:
 
 Page URL
-Form action
+
+Form action URL
+
 Vulnerability type
-Working payload
 
- How It Works (Internal Logic)
+Payload that triggered it
 
-1️⃣ Crawling — Collects internal URLs
-2️⃣ Form Discovery — Extracts all forms and inputs
-3️⃣ Payload Injection — Fills fields with SQLi/XSS payloads
-4️⃣ Response Analysis — Checks for errors or reflected payloads
-5️⃣ Reporting — Prints vulnerabilities in the console
+Internal Workflow
 
-♦︎Technology Stack
+Crawling – Collect internal URLs up to a predefined depth
+
+Form Discovery – Extract form details and input fields
+
+Payload Injection – Submit SQLi/XSS/auth-bypass payloads
+
+Response Analysis – Inspect HTML for error strings or reflected input
+
+Reporting – Print vulnerabilities in a structured format
+
+Technology Stack
 
 Python 3
+
 Requests (HTTP communication)
+
 BeautifulSoup4 (HTML parsing)
-urllib (URL joining & routing)
 
-♦︎Tested On
+urllib (URL parsing and joining)
 
-testphp.vulnweb.com (intentionally vulnerable site)
-Standard HTML-based forms
-Static websites without JavaScript rendering
+Tested On
 
- ♦︎Limitations
-ShadowForm currently does NOT handle:
-CSRF tokens
-Authentication workflows
+testphp.vulnweb.com (an intentionally vulnerable test site)
+
+Static websites with standard HTML forms
+
+Non–JavaScript-rendered content
+
+Limitations
+
+ShadowForm currently does not support:
+
+CSRF token handling
+
+Login-based or authenticated scanning
+
 JavaScript-rendered forms
-DOM-based XSS
+
+DOM-based XSS detection
+
 Multi-threaded crawling
-These can be added in future enhancements.
 
-🏁 Conclusion
+These limitations are expected in lightweight scanners and can be addressed in future updates.
 
-ShadowForm automates the repetitive and time-consuming task of testing form inputs for vulnerabilities.
-It is ideal for Red Teamers during reconnaissance and helps quickly identify high-risk insecure input fields.
+Conclusion
 
-📌 Future Improvements
+ShadowForm automates the repetitive process of testing web input fields for common vulnerabilities.
+It is suitable for Red Team reconnaissance and helps quickly highlight high-risk areas in target applications.
 
-Multithreaded crawling
+Planned Future Enhancements
 
-Headless browser support
+Multi-threaded crawling
 
-Improved IDOR detection
+Headless browser integration
 
-HTML/JSON report generation
+Enhanced IDOR detection
 
-Advanced payload mutation (fuzzing engine)
+HTML/JSON report output
 
-🙌 Acknowledgements
+Advanced payload mutation & fuzzing engine
+
+Acknowledgements
 
 OffSecDiary Red Team Internship
 
-Vulnerable test site: testphp.vulnweb.com
+VulnWeb (testphp.vulnweb.com)
 
-Python open-source libraries
+Python open-source ecosystem
